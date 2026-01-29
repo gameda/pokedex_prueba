@@ -22,8 +22,12 @@ class PokemonRemoteMediator @Inject constructor (
     ): MediatorResult {
 
         val page = when (loadType) {
-            LoadType.REFRESH -> remoteDataSource.getPokemonsList(0, state.config.pageSize)
-            LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+            LoadType.REFRESH ->  // cuando se abre la app
+                remoteDataSource.getPokemonsList(0, state.config.pageSize)
+
+            LoadType.PREPEND -> // usuario scrolleó al final → cargar más.
+                return MediatorResult.Success(endOfPaginationReached = true)
+
             LoadType.APPEND -> {
                 val offset = state.lastItemOrNull()?.id ?: 0
                 remoteDataSource.getPokemonsList(offset, state.config.pageSize)

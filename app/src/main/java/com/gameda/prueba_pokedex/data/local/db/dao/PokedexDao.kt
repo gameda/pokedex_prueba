@@ -8,11 +8,15 @@ import androidx.room.Query
 import com.gameda.prueba_pokedex.data.local.db.entity.DetailedPokemonEntity
 import com.gameda.prueba_pokedex.data.local.db.entity.SimplePokemonEntity
 import com.gameda.prueba_pokedex.domain.model.PokemonId
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PokedexDao {
     @Query("SELECT * FROM simple_pokemon_table ORDER BY id ASC")
     fun getPokemonsPaging(): PagingSource<Int, SimplePokemonEntity>
+
+    @Query("SELECT * FROM simple_pokemon_table WHERE favority == 1 ORDER BY id ASC")
+    fun getFavoritiesPokemons(): Flow<List<SimplePokemonEntity>>
 
     @Insert(onConflict = OnConflictStrategy.Companion.REPLACE)
     suspend fun insertPokemons(pokemons: List<SimplePokemonEntity>)

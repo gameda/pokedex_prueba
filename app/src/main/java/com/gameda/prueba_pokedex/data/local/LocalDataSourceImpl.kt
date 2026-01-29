@@ -1,25 +1,37 @@
 package com.gameda.prueba_pokedex.data.local
 
-import android.content.res.Resources.NotFoundException
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.PagingSource
 import com.gameda.prueba_pokedex.data.local.db.dao.DetailedPokemonDao
 import com.gameda.prueba_pokedex.data.local.db.dao.PokedexDao
 import com.gameda.prueba_pokedex.data.local.db.entity.SimplePokemonEntity
-import com.gameda.prueba_pokedex.data.local.db.entity.asDetailedPokemon
-import com.gameda.prueba_pokedex.data.local.db.entity.asDetailedPokemonEntity
+import com.gameda.prueba_pokedex.data.local.db.entity.toDetailedPokemon
+import com.gameda.prueba_pokedex.data.local.db.entity.toDetailedPokemonEntity
+import com.gameda.prueba_pokedex.data.local.db.entity.asSimplePokemon
 import com.gameda.prueba_pokedex.data.local.db.entity.asSimplePokemonEntity
 import com.gameda.prueba_pokedex.data.repository.contracts.LocalDataSource
 import com.gameda.prueba_pokedex.domain.model.DetailedPokemon
 import com.gameda.prueba_pokedex.domain.model.PokemonId
 import com.gameda.prueba_pokedex.domain.model.SimplePokemon
+import com.gameda.prueba_pokedex.domain.model.toSimplePokemon
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 @OptIn(ExperimentalPagingApi::class)
 class LocalDataSourceImpl(val pokedexDao: PokedexDao,
-                          val detailDao: DetailedPokemonDao): LocalDataSource{
+                          val detailDao: DetailedPokemonDao): LocalDataSource {
 
     override fun getPokemonsPaging(): PagingSource<Int, SimplePokemonEntity> =
         pokedexDao.getPokemonsPaging()
+
+    override fun getFavoritesPokemon(): Flow<List<SimplePokemon>> =
+        detailDao.getFavoritiesPokemons().map { lista ->
+            lista.map {
+                it.toDetailedPokemon.toSimplePokemon }}
+
+    override suspend fun setFavoritePokemon(pokemonId: PokemonId, isFavorite: Boolean) {
+        detailDao.setPokemonFavorite(pokemonId, isFavorite)
+    }
 
     override suspend fun savePokemons(pokemons: List<SimplePokemon>, clean: Boolean) {
         if(clean)
@@ -31,13 +43,15 @@ class LocalDataSourceImpl(val pokedexDao: PokedexDao,
     }
 
     override suspend fun getPokemonDetails(pokemonId: PokemonId): Result<DetailedPokemon> =
-        detailDao.getDetailedPokemon(pokemonId).let {
-            Result.success(it?.asDetailedPokemon ?: throw NotFoundException())
+        runCatching {
+            detailDao.getDetailedPokemon(pokemonId).toDetailedPokemon
         }
 
 
+
+
     override suspend fun setPokemonDetails(pokemon: DetailedPokemon) {
-        detailDao.insertDetailedPokemon(pokemon.asDetailedPokemonEntity)
+        detailDao.insertDetailedPokemon(pokemon.toDetailedPokemonEntity)
     }
 
 }

@@ -6,10 +6,14 @@ data class DetailedPokemon(
     val urlPicture: String,
     val types: List<PokemonType>,
     val weight: Double, // in kgs
-    val height: Double // in mts
+    val height: Double, // in mts
+    val isFavority: Boolean = false
 )
 
 
 data class PokemonType(
     val name: String
 )
+
+val DetailedPokemon.toSimplePokemon: SimplePokemon
+    get() = SimplePokemon(id, name, urlPicture)

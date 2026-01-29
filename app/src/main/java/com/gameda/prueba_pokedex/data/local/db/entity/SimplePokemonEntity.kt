@@ -13,7 +13,8 @@ import com.gameda.prueba_pokedex.domain.model.SimplePokemon
 data class SimplePokemonEntity(
     @PrimaryKey val id: PokemonId,
     val name: String,
-    val urlPicture: String
+    val urlPicture: String,
+    val favority: Boolean = false
 )
 val SimplePokemonEntity.asSimplePokemon: SimplePokemon
     get() = SimplePokemon(id, name, urlPicture)

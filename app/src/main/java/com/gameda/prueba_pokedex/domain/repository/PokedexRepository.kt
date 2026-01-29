@@ -9,5 +9,11 @@ import kotlinx.coroutines.flow.Flow
 interface PokedexRepository {
     fun getPokemonsList(): Flow<PagingData<SimplePokemon>>
 
+    fun getPokemonsFavorites(): Flow<List<SimplePokemon>>
     suspend fun getPokemonDetails(pokemonId: PokemonId): Result<DetailedPokemon>
+
+    suspend fun setFavoritePokemon(pokemonId: PokemonId, isFavorite: Boolean)
+
 }
+
+

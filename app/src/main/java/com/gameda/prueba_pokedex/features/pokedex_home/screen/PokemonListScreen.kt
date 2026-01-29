@@ -1,14 +1,11 @@
-package com.gameda.prueba_pokedex.features.pokemonList.screen
+package com.gameda.prueba_pokedex.features.pokedex_home.screen
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
@@ -18,7 +15,7 @@ import com.gameda.prueba_pokedex.domain.model.PokemonId
 import com.gameda.prueba_pokedex.domain.model.SimplePokemon
 import com.gameda.prueba_pokedex.features.common.composables.items.PokemonCardItem
 import com.gameda.prueba_pokedex.features.common.composables.loading.LoadingSpinner
-import com.gameda.prueba_pokedex.features.pokemonList.viewmodel.PokemonsViewModel
+import com.gameda.prueba_pokedex.features.pokedex_home.viewmodel.PokemonsViewModel
 import kotlinx.coroutines.flow.flowOf
 
 @Composable

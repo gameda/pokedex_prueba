@@ -6,11 +6,16 @@ import com.gameda.prueba_pokedex.data.local.db.entity.SimplePokemonEntity
 import com.gameda.prueba_pokedex.domain.model.DetailedPokemon
 import com.gameda.prueba_pokedex.domain.model.PokemonId
 import com.gameda.prueba_pokedex.domain.model.SimplePokemon
+import kotlinx.coroutines.flow.Flow
 
 @OptIn(ExperimentalPagingApi::class)
 interface LocalDataSource {
 
     fun getPokemonsPaging(): PagingSource<Int, SimplePokemonEntity>
+
+    fun getFavoritesPokemon(): Flow<List<SimplePokemon>>
+
+    suspend fun setFavoritePokemon(pokemonId: PokemonId, isFavorite: Boolean)
 
     suspend fun savePokemons(pokemons: List<SimplePokemon>, clean: Boolean)
 

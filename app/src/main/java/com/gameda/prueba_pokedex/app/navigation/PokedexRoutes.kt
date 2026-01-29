@@ -1,28 +1,38 @@
 package com.gameda.prueba_pokedex.app.navigation
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.ui.graphics.vector.ImageVector
 import com.gameda.prueba_pokedex.domain.model.PokemonId
+import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
+
 @Serializable
-sealed class PokedexRoutes(
+data class DetailsScreen(val id: PokemonId)
+
+@Serializable
+sealed class BottomRoutes(
     val title: String,
+    @Contextual
+    val icon: ImageVector
 ) {
     @Serializable
-    data object Lista: PokedexRoutes("List")
+    data object Home: BottomRoutes("Home", Icons.Default.Home)
 
     @Serializable
-    data object Random: PokedexRoutes("Random" )
+    data object Random: BottomRoutes("Random", Icons.Default.Person )
 
     @Serializable
-    data object Favorities: PokedexRoutes("Favorties")
-
-    @Serializable
-    data class Details(val id: PokemonId): PokedexRoutes("Details")
+    data object Favorites: BottomRoutes("Favorties", Icons.Default.Favorite)
 
 }
 
-val bottomNavItems = listOf(
-    PokedexRoutes.Lista,
-    PokedexRoutes.Random,
-    PokedexRoutes.Favorities,
-)
+val bottomItems = listOf(BottomRoutes.Home, BottomRoutes.Random, BottomRoutes.Favorites)
+
+
+
+
+

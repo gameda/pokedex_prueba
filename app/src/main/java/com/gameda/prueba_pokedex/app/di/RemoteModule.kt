@@ -38,7 +38,7 @@ object RemoteModule {
 
     @Singleton
     @Provides
-    fun providePquedexApi(retrofit: Retrofit): PokedexApiService {
+    fun providePokedexApi(retrofit: Retrofit): PokedexApiService {
         return retrofit.create(PokedexApiService::class.java)
     }
 }

@@ -97,5 +97,6 @@ dependencies {
     implementation libs.androidx.paging.common.ktx
     implementation libs.androidx.paging.compose
     implementation("androidx.compose.runtime:runtime-livedata:1.7.4")
+    //implementation(libs.kotlinx.serialization.json)
 
 }

@@ -18,19 +18,21 @@ data class DetailedPokemonEntity(
     val types: List<PokemonType>,
     val weight: Double,
     val height: Double,
+    val favority: Boolean = false
 )
 
-val DetailedPokemonEntity.asDetailedPokemon: DetailedPokemon
+val DetailedPokemonEntity.toDetailedPokemon: DetailedPokemon
     get() = DetailedPokemon(
         id,
         name,
         urlPicture,
         types,
         weight,
-        height
+        height,
+        favority
     )
 
-val DetailedPokemon.asDetailedPokemonEntity: DetailedPokemonEntity
+val DetailedPokemon.toDetailedPokemonEntity: DetailedPokemonEntity
     get() = DetailedPokemonEntity(
         id,
         name,
@@ -38,4 +40,5 @@ val DetailedPokemon.asDetailedPokemonEntity: DetailedPokemonEntity
         types,
         weight,
         height,
+        isFavority
     )

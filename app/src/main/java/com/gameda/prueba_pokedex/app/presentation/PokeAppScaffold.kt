@@ -1,4 +1,4 @@
-package com.gameda.prueba_pokedex.features.common.composables
+package com.gameda.prueba_pokedex.app.presentation
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -7,8 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
-import com.gameda.prueba_pokedex.features.common.composables.bottombar.BottomBar
+import com.gameda.prueba_pokedex.app.navigation.BottomBar
 
 @Composable
 fun PokeAppScaffold(modifier: Modifier = Modifier,

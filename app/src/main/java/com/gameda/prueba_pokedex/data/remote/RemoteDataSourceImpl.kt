@@ -12,10 +12,14 @@ import com.gameda.prueba_pokedex.domain.model.DetailedPokemon
 import com.gameda.prueba_pokedex.domain.model.PokemonId
 import com.gameda.prueba_pokedex.domain.model.SimplePokemon
 import com.gameda.prueba_pokedex.utils.serviceHandlerExceptions
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-class RemoteDataSourceImpl(private val pokedexApi: PokedexApiService): RemoteDataSoruce {
+class RemoteDataSourceImpl(private val pokedexApi: PokedexApiService,
+                           private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+): RemoteDataSoruce {
 
    override suspend fun getPokemonsList(offset: Int, limit: Int): Result<PokemonListResponse> =
        serviceHandlerExceptions {
@@ -23,8 +27,12 @@ class RemoteDataSourceImpl(private val pokedexApi: PokedexApiService): RemoteDat
        }
 
     override suspend fun getPokemonDetails(pokemonId: PokemonId): Result<DetailedPokemon> =
-        serviceHandlerExceptions {
-            pokedexApi.getPokemonDetails(pokemonId).asDetailedPokemon(pokemonId)
+        withContext(ioDispatcher) {
+            serviceHandlerExceptions {
+                pokedexApi.getPokemonDetails(pokemonId).asDetailedPokemon(pokemonId)
 
+            }
         }
+
+
 }

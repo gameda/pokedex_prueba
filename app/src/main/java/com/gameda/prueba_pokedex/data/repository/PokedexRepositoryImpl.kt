@@ -27,10 +27,14 @@ class PokedexRepositoryImpl (private val localDataSource: LocalDataSource,
             pagingSourceFactory = { localDataSource.getPokemonsPaging() }
         ).flow.map { pagingData ->
             pagingData.map { entity ->
-                savePokemonDetail(entity.id)
+                //savePokemonDetail(entity.id)
                 entity.asSimplePokemon } }
 
     }
+
+    override fun getPokemonsFavorites(): Flow<List<SimplePokemon>> =
+        localDataSource.getFavoritesPokemon()
+
 
     override suspend fun getPokemonDetails(pokemonId: PokemonId): Result<DetailedPokemon> {
         val local = localDataSource.getPokemonDetails(pokemonId)
@@ -44,6 +48,12 @@ class PokedexRepositoryImpl (private val localDataSource: LocalDataSource,
             }
             return remote
         }
+    }
+
+
+
+    override suspend fun setFavoritePokemon(pokemonId: PokemonId, isFavorite: Boolean) {
+        localDataSource.setFavoritePokemon(pokemonId, isFavorite)
     }
 
     suspend fun savePokemonDetail(pokemonId: PokemonId){

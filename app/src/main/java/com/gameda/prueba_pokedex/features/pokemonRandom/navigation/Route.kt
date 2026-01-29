@@ -4,19 +4,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.navigation.toRoute
-import com.gameda.prueba_pokedex.app.navigation.PokedexRoutes
-import com.gameda.prueba_pokedex.domain.model.PokemonId
+import com.gameda.prueba_pokedex.app.navigation.BottomRoutes
+import com.gameda.prueba_pokedex.app.navigation.DetailsScreen
 import com.gameda.prueba_pokedex.features.pokemonDetail.screen.PokemonDetailsScreen
 
 
 fun NavController.navigateToPokemonRandom() {
-    navigate(PokedexRoutes.Random)
+    navigate(DetailsScreen)
 }
 
 fun NavGraphBuilder.pokemonRandomNavigationNode() {
 
-    composable<PokedexRoutes.Random>{
+    composable<BottomRoutes.Random>{
         val pokemonId = (1..1000).random()
 
         PokemonDetailsScreen(
